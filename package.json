@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xorz57/Kaiser-Wilhelm-II.git"
+    "url": "git+https://github.com/xorz57/kaiser-wilhelm-ii.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xorz57/Kaiser-Wilhelm-II/issues"
+    "url": "https://github.com/xorz57/kaiser-wilhelm-ii/issues"
   },
-  "homepage": "https://github.com/xorz57/Kaiser-Wilhelm-II#readme",
+  "homepage": "https://github.com/xorz57/kaiser-wilhelm-ii#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "discord.js": "^11.5.1",
