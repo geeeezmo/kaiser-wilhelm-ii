@@ -51,10 +51,11 @@ function parseInformation(td) {
 		image: parseImage(td),
 		map: parseMap(td),
 		mode: parseMode(td),
-		current: parseCurrent(td),
-		maximum: parseMaximum(td),
+		tickrate: parseTickrate(td),
 		region: parseRegion(td),
-		tickrate: parseTickrate(td)
+		country: parseCountry(td),
+		current: parseCurrent(td),
+		maximum: parseMaximum(td)
 	};
 }
 
