@@ -62,13 +62,37 @@ function makePlayers(server) {
 	return server.current + '/' + server.maximum;
 }
 
+function makeMinimum(server) {
+	if (server.mode == 'AIR ASSAULT') {
+		return 20;
+	} else if (server.mode == 'CONQUEST') {
+		return 20;
+	} else if (server.mode == 'DOMINATION') {
+		return 10;
+	} else if (server.mode == 'FRONTLINES') {
+		return 16;
+	} else if (server.mode == 'OPERATIONS') {
+		return 20;
+	} else if (server.mode == 'RUSH') {
+		return 10;
+	} else if (server.mode == 'SHOCK OPERATIONS') {
+		return 20;
+	} else if (server.mode == 'SUPPLY DROP') {
+		return 10;
+	} else if (server.mode == 'TEAM DEATHMATCH') {
+		return 10;
+	} else if (server.mode == 'WAR PIGEONS') {
+		return 10;
+	} else {
+		return 0;
+	}
+}
+
 function makeColor(server) {
-	var minimum = 0;
-	if (server.maximum == 32) minimum = 10;
-	if (server.maximum == 64) minimum = 20;
+	if (server.minimum == 0) return 'DEFAULT';
 	if (server.current == 0) {
 		return 'RED';
-	} else if (server.current <= minimum) {
+	} else if (server.current <= server.minimum) {
 		return 'ORANGE';
 	} else if (server.current <= server.maximum) {
 		return 'GREEN';
@@ -77,10 +101,11 @@ function makeColor(server) {
 
 function parse(body) {
 	const $ = cheerio.load(body);
-	$('tbody tr').each(function(index, element) {
+	$('tbody tr').each(function (index, element) {
 		var td = $(this).children('td');
 		var server = parseInformation(td);
 		server.id = parseInt($(this).attr('data-url').split('/').pop());
+		server.minimum = makeMinimum(server);
 		servers.push(server);
 	});
 }
@@ -92,25 +117,25 @@ module.exports = {
 	execute(message, args) {
 		// Search for the name gRndpjv because it is the Discord Invitation Code
 		rp('https://battlefieldtracker.com/bf1/servers?platform=pc&name=gRndpjv')
-		.then(function (body) {
-			parse(body);
-		})
-		.finally(function () {
-			servers.sort(function(lhs, rhs){
-				return lhs.number - rhs.number;
+			.then(function (body) {
+				parse(body);
+			})
+			.finally(function () {
+				servers.sort(function (lhs, rhs) {
+					return lhs.number - rhs.number;
+				});
+				console.log(servers);
+				servers.forEach(function (server) {
+					const embed = new Discord.RichEmbed()
+						.setColor(makeColor(server))
+						.setThumbnail(server.image)
+						.addField('#', server.number, true)
+						.addField('Players', makePlayers(server), true)
+						.addField('Map', server.map, true)
+						.addField('Mode', server.mode, true)
+					message.channel.send(embed);
+				});
+				servers = [];
 			});
-			console.log(servers);
-			servers.forEach(function(server) {
-				const embed = new Discord.RichEmbed()
-					.setColor(makeColor(server))
-					.setThumbnail(server.image)
-					.addField('#', server.number, true)
-					.addField('Players', makePlayers(server), true)
-					.addField('Map', server.map, true)
-					.addField('Mode', server.mode, true)
-				message.channel.send(embed);
-			});
-			servers = [];
-		});
 	},
 };
