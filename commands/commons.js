@@ -78,13 +78,13 @@ function getOccupancyColor(server) {
 
 function parse(body) {
 	const $ = cheerio.load(body);
-	let servers = [];
+	let servers = {};
 	$('tbody tr').each(function (index, element) {
 		var td = $(this).children('td');
 		var server = parseInformation(td);
 		server.id = parseInt($(this).attr('data-url').split('/').pop());
 		server.minimum = renderMinimumPlayerCount(server);
-		servers.push(server);
+		servers[server.number] = server;
 	});
 	return servers;
 }

@@ -20,19 +20,19 @@ module.exports = {
 				});
 			})
 			.then((servers) => {
-				servers
-					.sort((lhs, rhs) => lhs.number - rhs.number)
-					.forEach((server) => {
-						const embed = new Discord.RichEmbed()
-							.setColor(commons.getOccupancyColor(server))
-							.setThumbnail(server.image)
-							.addField('#', server.number, true)
-							.addField('Players', commons.renderPlayerCount(server), true)
-							.addField('Map', server.map, true)
-							.addField('Mode', server.mode, true);
-						
-						message.channel.send(embed);
-					});
+				// Objects keys in ES6 have a traversal order.
+				// Integer keys are always first, and are sorted in an ascending order (0 -> 9).
+				Object.values(servers).forEach((server) => {
+					const embed = new Discord.RichEmbed()
+						.setColor(commons.getOccupancyColor(server))
+						.setThumbnail(server.image)
+						.addField('#', server.number, true)
+						.addField('Players', commons.renderPlayerCount(server), true)
+						.addField('Map', server.map, true)
+						.addField('Mode', server.mode, true);
+					
+					message.channel.send(embed);
+				});
 			})
 			.catch((err) => {
 				console.error(err);
