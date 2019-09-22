@@ -84,7 +84,7 @@ function parse(body) {
 		var server = parseInformation(td);
 		server.id = parseInt($(this).attr('data-url').split('/').pop());
 		server.minimum = renderMinimumPlayerCount(server);
-		servers[server.number] = server;
+		servers[server.id] = server;
 	});
 	return servers;
 }
