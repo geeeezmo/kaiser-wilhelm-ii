@@ -86,7 +86,10 @@ function parse(body) {
 		server.minimum = renderMinimumPlayerCount(server);
 		servers[server.id] = server;
 	});
-	return servers;
+	
+	return Object.entries(servers)
+		.sort(([,v1], [,v2]) => +v1.number - +v2.number)
+		.reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
 }
 
 module.exports = {
