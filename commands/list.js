@@ -5,10 +5,7 @@ const constants = require('../constants');
 
 function parseImage(td) {
 	image = td.find('img').attr('src');
-    if (image == '') {
-        return 'http://placehold.jp/99ccff/003366/480x305.jpg';
-    }
-    return image;
+    return (image == '') ? 'http://placehold.jp/99ccff/003366/480x305.jpg' : image;
 }
 
 function parseName(td) {
@@ -123,7 +120,7 @@ module.exports = {
 							.addField('Players', renderPlayerCount(server), true)
 							.addField('Map', server.map, true)
 							.addField('Mode', server.mode, true);
-						
+
 						message.channel.send(embed);
 					});
 			})
