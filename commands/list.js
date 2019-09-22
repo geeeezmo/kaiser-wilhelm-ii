@@ -4,7 +4,11 @@ const rp = require('request-promise');
 const constants = require('../constants');
 
 function parseImage(td) {
-	return td.find('img').attr('src');
+	image = td.find('img').attr('src');
+    if (image == '') {
+        return 'http://placehold.jp/99ccff/003366/480x305.jpg';
+    }
+    return image;
 }
 
 function parseName(td) {
