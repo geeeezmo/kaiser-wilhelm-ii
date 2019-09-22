@@ -6,7 +6,7 @@ const constants = require('../constants');
 function parseImage(td) {
 	image = td.find('img').attr('src');
     if (image == '') {
-        return 'https://via.placeholder.com/480x305/3fb5a6/ffffff?text=480x305';
+        return 'http://placehold.jp/99ccff/003366/480x305.jpg';
     }
     return image;
 }
