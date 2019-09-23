@@ -76,8 +76,8 @@ function parse(body) {
 }
 
 module.exports = {
-	name: 'list',
-	description: 'List all BoB servers',
+	name: 'bf1servers',
+	description: '',
 	args: false,
 	execute(message, args) {
 		// Search for the name gRndpjv because it is the Discord Invitation Code
