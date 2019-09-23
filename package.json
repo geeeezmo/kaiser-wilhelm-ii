@@ -1,6 +1,6 @@
 {
   "name": "kaiser-wilhelm-ii",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,9 +17,10 @@
   },
   "homepage": "https://github.com/xorz57/kaiser-wilhelm-ii#readme",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
-    "discord.js": "^11.5.1",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "cheerio": "1.0.0-rc.3",
+    "discord.js": "11.5.1",
+    "request": "2.88.0",
+    "request-promise": "4.2.4",
+    "dotenv": "8.1.0"
   }
 }
