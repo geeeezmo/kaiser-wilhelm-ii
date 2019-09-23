@@ -5,7 +5,7 @@ const constants = require('../constants');
 
 function parseImage(td) {
 	image = td.find('img').attr('src');
-    return (image == '') ? 'http://placehold.jp/99ccff/003366/480x305.jpg' : image;
+	return (image == '') ? 'http://placehold.jp/99ccff/003366/480x305.jpg' : image;
 }
 
 function parseName(td) {
