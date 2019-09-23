@@ -30,13 +30,13 @@ function renderMinimumPlayerCount(server) {
 }
 
 function makeColor(server) {
-	if (server.minimum === 0) return constants.colors.default;
+	if (server.minimum === 0) return 'DEFAULT';
 	if (server.current === 0) {
-		return constants.colors.red;
+		return 'RED';
 	} else if (server.current <= server.minimum) {
-		return constants.colors.orange;
+		return 'ORANGE';
 	} else if (server.current <= server.maximum) {
-		return constants.colors.green;
+		return 'GREEN';
 	}
 }
 

@@ -40,10 +40,3 @@ exports.gameModes = [
         minPlayerCount: 10
     }
 ];
-
-exports.colors = {
-    default: 'DEFAULT',
-    red: 'RED',
-    orange: 'ORANGE',
-    green: 'GREEN'
-};
