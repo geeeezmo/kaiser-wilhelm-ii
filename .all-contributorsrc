@@ -1,0 +1,23 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "geeeezmo",
+      "name": "Alexander Klimov",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2767789?v=4",
+      "profile": "https://github.com/geeeezmo",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "kaiser-wilhelm-ii",
+  "projectOwner": "xorz57",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
