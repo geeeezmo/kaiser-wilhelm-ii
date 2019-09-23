@@ -39,9 +39,6 @@ function parse(body) {
 				server.custom = true;
 				server.tickrate = tags[4].trim();
 				break;
-			default:
-				// what the fuck?
-				break;
 		}
 		const minimum = {
 			'AIR ASSAULT': 20,
