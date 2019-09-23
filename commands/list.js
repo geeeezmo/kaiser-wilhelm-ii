@@ -28,37 +28,6 @@ function parseRegion(td) {
 	return td.eq(3).text();
 }
 
-function parseCountry(td) {
-	return td.find('span').text().split('—')[0].trim();
-}
-
-function parseMap(td) {
-	return td.find('span').text().split('—')[1].trim();
-}
-
-function parseMode(td) {
-	return td.find('span').text().split('—')[2].trim();
-}
-
-function parseTickrate(td) {
-	return td.find('span').text().split('—')[3].trim();
-}
-
-function parseInformation(td) {
-	return {
-		number: parseNumber(td),
-		name: parseName(td),
-		image: parseImage(td),
-		map: parseMap(td),
-		mode: parseMode(td),
-		tickrate: parseTickrate(td),
-		region: parseRegion(td),
-		country: parseCountry(td),
-		current: parseCurrent(td),
-		maximum: parseMaximum(td)
-	};
-}
-
 function renderPlayerCount(server) {
 	return `${server.current}/${server.maximum}`;
 }
@@ -82,10 +51,32 @@ function makeColor(server) {
 function parse(body) {
 	const $ = cheerio.load(body);
 	let servers = [];
-	$('tbody tr').each(function (index, element) {
-		var td = $(this).children('td');
-		var server = parseInformation(td);
-		server.id = parseInt($(this).attr('data-url').split('/').pop());
+	$('tbody tr').each(function () {
+		const td = $(this).children('td');
+		const tags = td.find('span').text().split('—');
+		let server = {};
+		server.name = parseName(td);
+		server.number = parseNumber(td);
+		server.image = parseImage(td);
+		server.current = parseCurrent(td);
+		server.maximum = parseMaximum(td);
+		server.region = parseRegion(td);
+		server.country = tags[0].trim();
+		server.map = tags[1].trim();
+		server.mode = tags[2].trim();
+		switch (tags.length) {
+			case 4:
+				server.custom = false;
+				server.tickrate = tags[3].trim();
+				break;
+			case 5:
+				server.custom = true;
+				server.tickrate = tags[4].trim();
+				break;
+			default:
+				// what the fuck?
+				break;
+		}
 		server.minimum = renderMinimumPlayerCount(server);
 		servers.push(server);
 	});
