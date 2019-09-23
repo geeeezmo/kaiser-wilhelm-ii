@@ -76,7 +76,7 @@ function parse(body) {
 }
 
 module.exports = {
-	name: 'bf1servers',
+	name: 'bf1serverlist',
 	description: '',
 	args: false,
 	execute(message, args) {
