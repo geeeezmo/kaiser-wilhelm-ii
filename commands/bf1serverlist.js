@@ -54,6 +54,36 @@ function parse(body) {
 	return servers;
 }
 
+function doParse(body) {
+	return new Promise((resolve, reject) => {
+		try {
+			const parsed = parse(body);
+			return resolve(parsed);
+		} catch (e) {
+			reject(e);
+		}
+	});
+}
+
+function doDedupe(servers, prop = 'name') {
+	return new Promise((resolve, reject) => {
+		try {
+			let uniqueNames = servers.reduce((acc, server) => {
+				if (!acc.includes(server[prop])) {
+					acc.push(server[prop]);
+				}
+				return acc;
+			}, []);
+			
+			let unique = servers.filter((server) => uniqueNames.includes(server.name));
+			
+			return resolve(unique);
+		} catch (e) {
+			reject(e);
+		}
+	});
+}
+
 module.exports = {
 	name: 'bf1serverlist',
 	description: '',
@@ -61,16 +91,8 @@ module.exports = {
 	execute(message, args) {
 		// Search for the name gRndpjv because it is the Discord Invitation Code
 		rp('https://battlefieldtracker.com/bf1/servers?platform=pc&name=gRndpjv')
-			.then((body) => {
-				return new Promise((resolve, reject) => {
-					try {
-						const parsed = parse(body);
-						return resolve(parsed);
-					} catch (e) {
-						reject(e);
-					}
-				});
-			})
+			.then(doParse)
+			.then(doDedupe)
 			.then((servers) => {
 				servers
 					.sort((lhs, rhs) => lhs.name.localeCompare(rhs.name))
