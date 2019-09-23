@@ -7,10 +7,6 @@ function parseImage(td) {
 	return (image == '') ? 'http://placehold.jp/99ccff/003366/480x305.jpg' : image;
 }
 
-function parseNumber(td) {
-	return parseInt(td.find('a').text().charAt(6));
-}
-
 function parseCurrent(td) {
 	return parseInt(td.eq(2).text().trim().split('/')[0].trim());
 }
@@ -42,7 +38,7 @@ function parse(body) {
 		const tags = td.find('span').text().split('—');
 		let server = {};
 		server.name = td.find('a').text();
-		server.number = parseNumber(td);
+		server.players = td.eq(2).text().replace(/ /g, '');
 		server.image = parseImage(td);
 		server.current = parseCurrent(td);
 		server.maximum = parseMaximum(td);
@@ -100,12 +96,12 @@ module.exports = {
 			})
 			.then((servers) => {
 				servers
-					.sort((lhs, rhs) => lhs.number - rhs.number)
+					.sort((lhs, rhs) => lhs.name.localeCompare(rhs.name))
 					.forEach((server) => {
 						const embed = new Discord.RichEmbed()
 							.setColor(makeColor(server))
 							.setThumbnail(server.image)
-							.addField('#', server.number, true)
+							.setTitle(server.name)
 							.addField('Players', renderPlayerCount(server), true)
 							.addField('Map', server.map, true)
 							.addField('Mode', server.mode, true);
