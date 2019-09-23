@@ -2,7 +2,7 @@
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/xorz57/kaiser-wilhelm-ii)
 [![Discord](https://discordapp.com/api/guilds/616199514113572885/widget.png?style=shield)](https://discordapp.com/invite/PMqbH2Y)
 
-![image](https://user-images.githubusercontent.com/1548352/64825736-fa3c2f80-d5c6-11e9-8d57-60ad59fa7951.png)
+![image](https://user-images.githubusercontent.com/1548352/65400855-4ceac800-ddcd-11e9-87f5-fd4de2ff02fe.png)
 
 ## Commands
 - `+list` Lists all BoB servers
