@@ -7,18 +7,6 @@ function parseImage(td) {
 	return (image == '') ? 'http://placehold.jp/99ccff/003366/480x305.jpg' : image;
 }
 
-function parseCurrent(td) {
-	return parseInt(td.eq(2).text().trim().split('/')[0].trim());
-}
-
-function parseMaximum(td) {
-	return parseInt(td.eq(2).text().trim().split('/')[1].split('[')[0].trim());
-}
-
-function renderPlayerCount(server) {
-	return `${server.current}/${server.maximum}`;
-}
-
 function makeColor(server) {
 	if (server.minimum === 0) return 'DEFAULT';
 	if (server.current === 0) return 'RED';
@@ -31,14 +19,14 @@ function parse(body) {
 	let servers = [];
 	$('tbody tr').each(function () {
 		const td = $(this).children('td');
-		const tags = td.find('span').text().split('—');
 		let server = {};
+		server.image = parseImage(td);
 		server.name = td.find('a').text();
 		server.players = td.eq(2).text().replace(/ /g, '');
-		server.image = parseImage(td);
-		server.current = parseCurrent(td);
-		server.maximum = parseMaximum(td);
+		server.current = parseInt(server.players.split('/')[0].trim());
+		server.maximum = parseInt(server.players.split('/')[1].split('[')[0].trim());
 		server.region = td.eq(3).text();
+		const tags = td.find('span').text().split('—');
 		server.country = tags[0].trim();
 		server.map = tags[1].trim();
 		server.mode = tags[2].trim();
@@ -98,10 +86,10 @@ module.exports = {
 							.setColor(makeColor(server))
 							.setThumbnail(server.image)
 							.setTitle(server.name)
-							.addField('Players', renderPlayerCount(server), true)
 							.addField('Map', server.map, true)
-							.addField('Mode', server.mode, true);
-
+							.addField('Players', server.players, true)
+							.addField('Mode', server.mode, true)
+							.addField('Tickrate', server.tickrate, true);
 						message.channel.send(embed);
 					});
 			})
