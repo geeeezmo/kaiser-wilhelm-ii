@@ -2,18 +2,14 @@ const Discord = require('discord.js');
 const cheerio = require('cheerio');
 const rp = require('request-promise');
 
-function parseImage(td) {
-	image = td.find('img').attr('src');
-	return (image == '') ? 'http://placehold.jp/99ccff/003366/480x305.jpg' : image;
-}
-
 function parse(body) {
 	const $ = cheerio.load(body);
 	let servers = [];
 	$('tbody tr').each(function () {
 		const td = $(this).children('td');
 		let server = {};
-		server.image = parseImage(td);
+		server.image = td.find('img').attr('src');
+		server.image = (server.image == '') ? 'http://placehold.jp/99ccff/003366/480x305.jpg' : server.image;
 		server.name = td.find('a').text();
 		server.players = td.eq(2).text().replace(/ /g, '');
 		server.current = parseInt(server.players.split('/')[0].trim());
