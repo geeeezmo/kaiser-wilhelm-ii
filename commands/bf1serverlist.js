@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const cheerio = require('cheerio');
 const rp = require('request-promise');
-const constants = require('../constants');
 
 function parseImage(td) {
 	image = td.find('img').attr('src');
@@ -22,11 +21,6 @@ function parseMaximum(td) {
 
 function renderPlayerCount(server) {
 	return `${server.current}/${server.maximum}`;
-}
-
-function renderMinimumPlayerCount(server) {
-	const mode = constants.gameModes.find((mode) => mode.name === server.mode);
-	return (mode && mode.minPlayerCount) || 0;
 }
 
 function makeColor(server) {
@@ -69,7 +63,19 @@ function parse(body) {
 				// what the fuck?
 				break;
 		}
-		server.minimum = renderMinimumPlayerCount(server);
+		const minimum = {
+			'AIR ASSAULT': 20,
+			'CONQUEST': 20,
+			'OPERATIONS': 20,
+			'SHOCK OPERATIONS': 20,
+			'FRONTLINES': 16,
+			'DOMINATION': 10,
+			'RUSH': 10,
+			'SUPPLY DROP': 10,
+			'TEAM DEATHMATCH': 10,
+			'WAR PIGEONS': 10
+		};
+		server.minimum = minimum[server.mode];
 		servers.push(server);
 	});
 	return servers;
