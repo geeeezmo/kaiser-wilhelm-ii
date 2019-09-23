@@ -65,19 +65,14 @@ function doParse(body) {
 	});
 }
 
-function doDedupe(servers, prop = 'name') {
+function doDedupe(servers) {
 	return new Promise((resolve, reject) => {
 		try {
-			let uniqueNames = servers.reduce((acc, server) => {
-				if (!acc.includes(server[prop])) {
-					acc.push(server[prop]);
-				}
-				return acc;
-			}, []);
-			
-			let unique = servers.filter((server) => uniqueNames.includes(server.name));
-			
-			return resolve(unique);
+			const uniqueServers = Array.from(new Set(servers.map(server => server.name)))
+			.map(name => {
+			  return servers.find(server => server.name === name)
+			})
+			return resolve(uniqueServers);
 		} catch (e) {
 			reject(e);
 		}
