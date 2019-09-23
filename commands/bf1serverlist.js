@@ -23,6 +23,9 @@ function parse(body) {
 		server.country = tags[0].trim();
 		server.map = tags[1].trim();
 		server.mode = tags[2].trim();
+		if (server.country == '??') server.country = 'N/A';
+		if (server.map == '') server.map = 'N/A';
+		if (server.mode == '') server.mode = 'N/A';
 		switch (tags.length) {
 			case 4:
 				server.custom = false;
