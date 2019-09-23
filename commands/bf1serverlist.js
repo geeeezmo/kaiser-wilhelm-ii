@@ -7,13 +7,6 @@ function parseImage(td) {
 	return (image == '') ? 'http://placehold.jp/99ccff/003366/480x305.jpg' : image;
 }
 
-function makeColor(server) {
-	if (server.minimum === 0) return 'DEFAULT';
-	if (server.current === 0) return 'RED';
-	else if (server.current <= server.minimum) return 'ORANGE';
-	else if (server.current <= server.maximum) return 'GREEN';
-}
-
 function parse(body) {
 	const $ = cheerio.load(body);
 	let servers = [];
@@ -53,6 +46,10 @@ function parse(body) {
 			'WAR PIGEONS': 10
 		};
 		server.minimum = minimum[server.mode];
+		if (server.minimum === 0) server.color = 'DEFAULT';
+		if (server.current === 0) server.color = 'RED';
+		else if (server.current <= server.minimum) server.color = 'ORANGE';
+		else if (server.current <= server.maximum) server.color = 'GREEN';
 		servers.push(server);
 	});
 	return servers;
@@ -80,7 +77,7 @@ module.exports = {
 					.sort((lhs, rhs) => lhs.name.localeCompare(rhs.name))
 					.forEach((server) => {
 						const embed = new Discord.RichEmbed()
-							.setColor(makeColor(server))
+							.setColor(server.color)
 							.setThumbnail(server.image)
 							.setTitle(server.name)
 							.addField('Map', server.map, true)
