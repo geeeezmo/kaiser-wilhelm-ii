@@ -46,7 +46,7 @@ function parse(body) {
 		};
 		server.minimum = minimum[server.mode];
 		if (server.minimum === 0) server.color = 'DEFAULT';
-		if (server.current === 0) server.color = 'RED';
+		else if (server.current === 0) server.color = 'RED';
 		else if (server.current <= server.minimum) server.color = 'ORANGE';
 		else if (server.current <= server.maximum) server.color = 'GREEN';
 		servers.push(server);
