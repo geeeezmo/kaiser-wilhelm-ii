@@ -8,10 +8,6 @@ function parseImage(td) {
 	return (image == '') ? 'http://placehold.jp/99ccff/003366/480x305.jpg' : image;
 }
 
-function parseName(td) {
-	return td.find('a').text();
-}
-
 function parseNumber(td) {
 	return parseInt(td.find('a').text().charAt(6));
 }
@@ -22,10 +18,6 @@ function parseCurrent(td) {
 
 function parseMaximum(td) {
 	return parseInt(td.eq(2).text().trim().split('/')[1].split('[')[0].trim());
-}
-
-function parseRegion(td) {
-	return td.eq(3).text();
 }
 
 function renderPlayerCount(server) {
@@ -55,12 +47,12 @@ function parse(body) {
 		const td = $(this).children('td');
 		const tags = td.find('span').text().split('—');
 		let server = {};
-		server.name = parseName(td);
+		server.name = td.find('a').text();
 		server.number = parseNumber(td);
 		server.image = parseImage(td);
 		server.current = parseCurrent(td);
 		server.maximum = parseMaximum(td);
-		server.region = parseRegion(td);
+		server.region = td.eq(3).text();
 		server.country = tags[0].trim();
 		server.map = tags[1].trim();
 		server.mode = tags[2].trim();
