@@ -21,13 +21,9 @@ function renderPlayerCount(server) {
 
 function makeColor(server) {
 	if (server.minimum === 0) return 'DEFAULT';
-	if (server.current === 0) {
-		return 'RED';
-	} else if (server.current <= server.minimum) {
-		return 'ORANGE';
-	} else if (server.current <= server.maximum) {
-		return 'GREEN';
-	}
+	if (server.current === 0) return 'RED';
+	else if (server.current <= server.minimum) return 'ORANGE';
+	else if (server.current <= server.maximum) return 'GREEN';
 }
 
 function parse(body) {
