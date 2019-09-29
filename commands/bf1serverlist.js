@@ -104,7 +104,19 @@ module.exports = {
 					});
 			})
 			.catch((err) => {
-				console.error(err);
+				// if the error is on the server side (see request-promise-core/lib/errors.js)
+				if (err.name === 'StatusCodeError') {
+					// strip HTML, CSS and multiple subsequent newline chars from the response
+					const msg = err.message
+						.replace(/<style>[\W\w]*<\/style>/gmi, '')
+						.replace(/<[^>]*>?/gmi, '')
+						.replace(/\s*\n+\s*/gmi, '\n');
+
+					message.channel.send(`Unfortunately, tracker service is not operating correctly. This is what it has to say:\n${msg}`);
+					console.error(`Tracker service responded with code ${err.statusCode} and message:\n${msg}`);
+				} else {
+					console.error(err);
+				}
 			});
 	},
 };
